@@ -1,3 +1,5 @@
+# Yarn PnP
+.pnp.*
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -5,9 +7,13 @@
 !.yarn/sdks
 !.yarn/versions
 
+# Yarn cache and install state (ignored unless using zero-installs)
+.yarn/cache
+.yarn/install-state.gz
+.yarn/unplugged
+
 # Swap the comments on the following lines if you wish to use zero-installs
 # In that case, don't forget to run `yarn config set enableGlobalCache false`!
 # Documentation here: https://yarnpkg.com/features/caching#zero-installs
-
 #!.yarn/cache
-.pnp.*
+#!.pnp.*
