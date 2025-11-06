@@ -18,6 +18,12 @@ describe("AxiosEchoApiClient", () => {
       message: "Hello World",
     });
 
-    expect(result.form).toMatchInlineSnapshot();
+    expect(result.form).toMatchInlineSnapshot(`
+{
+  "email": "john@example.com",
+  "message": "Hello World",
+  "name": "John Doe",
+}
+`);
   });
 });
