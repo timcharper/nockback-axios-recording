@@ -82,7 +82,14 @@ export async function setupNock(
     nock.activate();
   }
 
-  const back = await nock.back(fixtureFileName, {});
+  const back = await nock.back(fixtureFileName, {
+    before: (def) => {
+      console.log("definition headers, raw headers", {
+        headers: def.headers,
+        rawHeaders: (def as any).rawHeaders,
+      });
+    },
+  });
 
   return () => {
     back.nockDone();
