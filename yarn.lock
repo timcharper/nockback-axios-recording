@@ -993,6 +993,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/form-data@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "@types/form-data@npm:2.5.2"
+  dependencies:
+    form-data: "npm:*"
+  checksum: 10c0/d781239cec80c2e4a33c845f4adc6a25883e982e8ae4f472d38e9928a197f62b6a3e24fc9e28407b1be01c8ad22baeb5053e904af77344e9caa9909cbdccbd0b
+  languageName: node
+  linkType: hard
+
 "@types/http-cache-semantics@npm:*":
   version: 4.0.4
   resolution: "@types/http-cache-semantics@npm:4.0.4"
@@ -2228,7 +2237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^4.0.4":
+"form-data@npm:*, form-data@npm:^4.0.4":
   version: 4.0.4
   resolution: "form-data@npm:4.0.4"
   dependencies:
@@ -3592,10 +3601,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nockback-axios-recording@workspace:."
   dependencies:
+    "@types/form-data": "npm:^2.5.2"
     "@types/jest": "npm:^30.0.0"
     "@types/node": "npm:^24.10.0"
     "@yarnpkg/pnpify": "npm:^4.1.6"
     axios: "npm:^1.13.2"
+    form-data: "npm:^4.0.4"
     jest: "npm:^30.2.0"
     jest-util: "npm:^30.2.0"
     nock: "npm:^14.0.10"
