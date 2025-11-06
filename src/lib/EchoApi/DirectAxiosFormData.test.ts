@@ -16,33 +16,6 @@ describe("Direct axios FormData test", () => {
   });
 
   it("should post form data with manually configured nock", async () => {
-    // Setup nock to intercept the POST request
-    const scope = nock("https://httpbin.org")
-      .post("/post")
-      .reply(200, {
-        args: {},
-        data: "",
-        files: {},
-        form: {
-          email: "john@example.com",
-          message: "Hello World",
-          name: "John Doe",
-        },
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Accept-Encoding": "gzip, compress, deflate, br",
-          "Content-Length": "340",
-          "Content-Type":
-            "multipart/form-data; boundary=----WebKitFormBoundaryFixedForNock",
-          Host: "httpbin.org",
-          "User-Agent": "axios/1.13.2",
-          "X-Amzn-Trace-Id": "Root=1-690bf87e-1bb4d1757d6d3ab40fe762e4",
-        },
-        json: null,
-        origin: "8.8.8.8",
-        url: "https://httpbin.org/post",
-      });
-
     // Create form data directly with axios
     const form = new FormData();
     const boundary = "----WebKitFormBoundaryFixedForNock";
@@ -51,6 +24,46 @@ describe("Direct axios FormData test", () => {
     form.append("name", "John Doe");
     form.append("email", "john@example.com");
     form.append("message", "Hello World");
+    // Expected body from the recording - exact match required
+    const expectedBody = form.getBuffer().toString();
+    // Setup nock to intercept the POST request
+    const scope = nock("https://httpbin.org:443")
+      .post("/post", expectedBody)
+      .reply(
+        200,
+        {
+          args: {},
+          data: "",
+          files: {},
+          form: {
+            email: "john@example.com",
+            message: "Hello World",
+            name: "John Doe",
+          },
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Accept-Encoding": "gzip, compress, deflate, br",
+            "Content-Length": "340",
+            "Content-Type":
+              "multipart/form-data; boundary=----WebKitFormBoundaryFixedForNock",
+            Host: "httpbin.org",
+            "User-Agent": "axios/1.13.2",
+            "X-Amzn-Trace-Id": "Root=1-690bf87e-1bb4d1757d6d3ab40fe762e4",
+          },
+          json: null,
+          origin: "8.8.8.8",
+          url: "https://httpbin.org/post",
+        },
+        {
+          "access-control-allow-credentials": "true",
+          "access-control-allow-origin": "*",
+          connection: "close",
+          "content-length": "614",
+          "content-type": "application/json",
+          date: "Thu, 06 Nov 2025 01:23:20 GMT",
+          server: "gunicorn/19.9.0",
+        }
+      );
 
     // Make the request directly with axios
     const response = await axios.post("https://httpbin.org/post", form, {
