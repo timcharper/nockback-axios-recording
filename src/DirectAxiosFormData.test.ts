@@ -81,4 +81,26 @@ describe("Direct axios FormData test", () => {
     // Verify nock intercepted the request
     expect(scope.isDone()).toBe(true);
   });
+
+  it("should post string with manually configured nock", async () => {
+    const scope = nock("https://httpbin.org:443")
+      .post("/post")
+      .reply(200, "hello", {
+        "content-length": "5",
+      });
+
+    const response = await axios.post("https://httpbin.org/post", "hello", {
+      headers: {
+        "content-type": "application/json",
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity,
+    });
+
+    // Verify the response
+    expect(response.data).toMatchInlineSnapshot(`"hello"`);
+
+    // Verify nock intercepted the request
+    expect(scope.isDone()).toBe(true);
+  });
 });
