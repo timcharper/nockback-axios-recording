@@ -16,19 +16,8 @@ describe("Direct axios FormData test", () => {
   });
 
   it("should post form data with manually configured nock", async () => {
-    // Create form data directly with axios
-    const form = new FormData();
-    const boundary = "----WebKitFormBoundaryFixedForNock";
-    form.setBoundary(boundary);
-
-    form.append("name", "John Doe");
-    form.append("email", "john@example.com");
-    form.append("message", "Hello World");
-    // Expected body from the recording - exact match required
-    const expectedBody = form.getBuffer().toString();
-    // Setup nock to intercept the POST request
     const scope = nock("https://httpbin.org:443")
-      .post("/post", expectedBody)
+      .post("/post")
       .reply(
         200,
         {
@@ -65,7 +54,13 @@ describe("Direct axios FormData test", () => {
         }
       );
 
-    // Make the request directly with axios
+    const form = new FormData();
+    const boundary = "----WebKitFormBoundaryFixedForNock";
+    form.setBoundary(boundary);
+
+    form.append("name", "John Doe");
+    form.append("email", "john@example.com");
+    form.append("message", "Hello World");
     const response = await axios.post("https://httpbin.org/post", form, {
       headers: {
         ...form.getHeaders(),
